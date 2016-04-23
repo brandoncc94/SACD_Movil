@@ -12,5 +12,71 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Elige una opción:"
+        android:textSize="20dp"
+        android:id="@+id/lbl_elegir" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:text="Buscar Profesores"
+                android:id="@+id/textView2"
+                android:textSize="20dp"
+                android:layout_below="@+id/lbl_elegir"
+                android:layout_alignRight="@+id/lbl_elegir"
+                android:layout_alignEnd="@+id/lbl_elegir"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:width="200dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_column="9"
+                android:src="@drawable/search"
+                android:layout_marginLeft="20dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="159dp"
+                android:layout_height="60dp"
+                android:text="Ver Reportes"
+                android:id="@+id/textView"
+                android:textSize="20dp"
+                android:layout_alignRight="@+id/lbl_elegir"
+                android:layout_alignEnd="@+id/lbl_elegir"
+                android:layout_above="@+id/textView2"
+                android:layout_row="2"
+                android:layout_column="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></TableRow>
+    </TableLayout>
+
 </RelativeLayout>

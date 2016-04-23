@@ -44,7 +44,7 @@ public class BusquedaProfesor extends AppCompatActivity {
         nombresProfesores.add("Prueba");
 
         tbProfesores = (TableLayout)findViewById(R.id.tbProfesores);
-        
+
         EditText txtBuscar = (EditText) findViewById(R.id.tbxBuscar);
 
         txtBuscar.addTextChangedListener(new TextWatcher() {

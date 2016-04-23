@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         ImageButton btnBuscar = (ImageButton)findViewById(R.id.imgSearch);
+        ImageButton btnGenerarReportes = (ImageButton)findViewById(R.id.imgDocument);
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +33,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnGenerarReportes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReportesSeleccion.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

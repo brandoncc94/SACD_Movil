@@ -25,11 +25,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import Controller.Requester;
+
 public class BusquedaProfesor extends AppCompatActivity {
     ArrayList<String> nombresProfesores = new ArrayList<>();
     TableLayout tbProfesores;
     String currentText = "";
-    //Requester requester;
+    Requester requester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +41,10 @@ public class BusquedaProfesor extends AppCompatActivity {
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
-        nombresProfesores.add("Hola");
-        nombresProfesores.add("Adios");
-        nombresProfesores.add("Prueba");
-
+        EditText txtBuscar = (EditText) findViewById(R.id.tbxBuscar);
         tbProfesores = (TableLayout)findViewById(R.id.tbProfesores);
 
-        EditText txtBuscar = (EditText) findViewById(R.id.tbxBuscar);
+        requester = Requester.getInstance();
 
         txtBuscar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,6 +73,7 @@ public class BusquedaProfesor extends AppCompatActivity {
         });
 
         try {
+            nombresProfesores = requester.getProfesores();
             actualizarProfesores();
         }
         catch(Exception e){

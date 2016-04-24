@@ -159,11 +159,13 @@ public class Requester {
     {
         String id, periodo, anio;
         ArrayList<Semestre> listaSemestres = new ArrayList<>();
-        String request = "http://proyecto_softw.comxa.com/WebService/getSemestres";
+        String request = "http://proyecto_softw.comxa.com/WebService/getSemestres.php";
+
         JSONObject obj = connection.getObject(request);
         System.out.println("Prueba");
         System.out.println(obj);
         System.out.println("Prueba");
+
         int estado = obj.getInt("estado");
         if(estado == 1){
             JSONArray info = obj.getJSONArray("info");

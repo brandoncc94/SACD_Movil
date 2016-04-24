@@ -9,4 +9,87 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.brandon.sacd_movil.ReportesDetalle">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Periodo"
+        android:id="@+id/textView4"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="103dp"
+        android:layout_marginStart="103dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Año"
+        android:id="@+id/textView9"
+        android:textStyle="bold"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/textView4"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carga en Horas"
+        android:id="@+id/textView10"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView9"
+        android:layout_alignRight="@+id/textView9"
+        android:layout_alignEnd="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carga en Porcentaje"
+        android:id="@+id/textView11"
+        android:layout_marginTop="22dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView10"
+        android:layout_alignRight="@+id/textView10"
+        android:layout_alignEnd="@+id/textView10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Periodo"
+        android:id="@+id/txtPeriodo"
+        android:layout_marginLeft="37dp"
+        android:layout_marginStart="37dp"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Año"
+        android:id="@+id/txtAnio"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_alignLeft="@+id/txtPeriodo"
+        android:layout_alignStart="@+id/txtPeriodo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carga en Horas"
+        android:id="@+id/txtCargHoras"
+        android:layout_alignTop="@+id/textView10"
+        android:layout_alignLeft="@+id/txtAnio"
+        android:layout_alignStart="@+id/txtAnio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carga en Porcentaje"
+        android:id="@+id/txtCargPorcentaje"
+        android:layout_alignTop="@+id/textView11"
+        android:layout_alignLeft="@+id/txtPeriodo"
+        android:layout_alignStart="@+id/txtPeriodo" />
 </RelativeLayout>

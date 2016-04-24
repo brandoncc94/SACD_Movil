@@ -1,11 +1,8 @@
 package Controller;
 
 import Database.Connection;
-<<<<<<< HEAD
 import Model.Plaza;
-=======
 import Model.Semestre;
->>>>>>> origin/master
 
 import android.graphics.Bitmap;
 

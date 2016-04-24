@@ -15,10 +15,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import Controller.Requester;
+import Model.Semestre;
 
 public class ReportesSeleccion extends AppCompatActivity {
 
-    Requester requester;
+    private Requester requester;
+    private ArrayList<Semestre> semestres;
+    private ArrayList<String> profesores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,49 +33,71 @@ public class ReportesSeleccion extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         requester = Requester.getInstance();
-        cargarProfesores();
-    }
 
-    private void cargarSemestres(){
-        Spinner spSemestres = (Spinner)findViewById(R.id.spinner);
-        ArrayList<String> semestres = new ArrayList<>();
         try {
-            semestres = requester.getProfesores();
+            semestres = requester.getSemestres();
+        }
+        catch(Exception e){
+            Toast.makeText(getApplicationContext(), "Error al cargar los semestres.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            profesores = requester.getProfesores();
         }
         catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error al cargar los profesores.",
                     Toast.LENGTH_SHORT).show();
         }
+        cargarPeriodos();
+        cargarAnios();
+        cargarProfesores();
+    }
+
+    private void cargarPeriodos(){
+        Spinner spPeriodos = (Spinner)findViewById(R.id.spinner);
+        ArrayList<String> periodos = new ArrayList<>();
+        ArrayAdapter<String> adapter;
+
+        for (Semestre semestre : semestres){
+            if (!periodos.contains(semestre.getPeriodo()))
+                periodos.add(semestre.getPeriodo());
+        }
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, periodos);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPeriodos.setAdapter(adapter);
     }
 
     private void cargarAnios(){
         Spinner spAnios = (Spinner)findViewById(R.id.spinner2);
-        ArrayList<String> semestres = new ArrayList<>();
-        try {
-            semestres = requester.getProfesores();
+        ArrayList<String> anios = new ArrayList<>();
+        ArrayAdapter<String> adapter;
+
+        for (Semestre semestre : semestres){
+            if (!anios.contains(semestre.getAnio()))
+                anios.add(semestre.getAnio());
         }
-        catch(Exception e){
-            Toast.makeText(getApplicationContext(), "Error al cargar los profesores.",
-                    Toast.LENGTH_SHORT).show();
-        }
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, anios);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAnios.setAdapter(adapter);
     }
 
     private void cargarProfesores(){
         Spinner spProfesores = (Spinner)findViewById(R.id.spinner3);
-        ArrayList<String> semestres = new ArrayList<>();
+        ArrayList<String> nombres = new ArrayList<>();
         ArrayAdapter<String> adapter;
+        String[] parts;
 
-        try {
-            semestres = requester.getProfesores();
-            adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, semestres);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spProfesores.setAdapter(adapter);
+        for (String profesor : profesores){
+            parts = profesor.split("-");
+            nombres.add(parts[1]);
+        }
 
-        }
-        catch(Exception e){
-            Toast.makeText(getApplicationContext(), "Error al cargar los profesores.",
-                    Toast.LENGTH_SHORT).show();
-        }
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, nombres);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spProfesores.setAdapter(adapter);
     }
 
     public void btnGenerarOnClick(View v) {

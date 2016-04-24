@@ -22,6 +22,9 @@ public class ReportesSeleccion extends AppCompatActivity {
     private Requester requester;
     private ArrayList<Semestre> semestres;
     private ArrayList<String> profesores;
+    private Spinner spPeriodos;
+    private Spinner spAnios;
+    private Spinner spProfesores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,10 @@ public class ReportesSeleccion extends AppCompatActivity {
         setTitle("Generar Reportes");
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
+        spPeriodos = (Spinner)findViewById(R.id.spinner);
+        spAnios = (Spinner)findViewById(R.id.spinner2);
+        spProfesores = (Spinner)findViewById(R.id.spinner3);
 
         requester = Requester.getInstance();
 
@@ -49,13 +56,12 @@ public class ReportesSeleccion extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error al cargar los profesores.",
                     Toast.LENGTH_SHORT).show();
         }
-        cargarPeriodos();
+        /*cargarPeriodos();
         cargarAnios();
-        cargarProfesores();
+        cargarProfesores();*/
     }
 
     private void cargarPeriodos(){
-        Spinner spPeriodos = (Spinner)findViewById(R.id.spinner);
         ArrayList<String> periodos = new ArrayList<>();
         ArrayAdapter<String> adapter;
 
@@ -70,7 +76,6 @@ public class ReportesSeleccion extends AppCompatActivity {
     }
 
     private void cargarAnios(){
-        Spinner spAnios = (Spinner)findViewById(R.id.spinner2);
         ArrayList<String> anios = new ArrayList<>();
         ArrayAdapter<String> adapter;
 
@@ -85,7 +90,6 @@ public class ReportesSeleccion extends AppCompatActivity {
     }
 
     private void cargarProfesores(){
-        Spinner spProfesores = (Spinner)findViewById(R.id.spinner3);
         ArrayList<String> nombres = new ArrayList<>();
         ArrayAdapter<String> adapter;
         String[] parts;
@@ -102,6 +106,9 @@ public class ReportesSeleccion extends AppCompatActivity {
 
     public void btnGenerarOnClick(View v) {
         Intent intent = new Intent(ReportesSeleccion.this, ReportesDetalle.class);
+        intent.putExtra("nombre", spProfesores.getSelectedItem().toString());
+        intent.putExtra("periodo", spPeriodos.getSelectedItem().toString());
+        intent.putExtra("anio", spAnios.getSelectedItem().toString());
         startActivity(intent);
     }
 

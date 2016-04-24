@@ -50,7 +50,7 @@ public class Requester {
         int estado = obj.getInt("estado");
         if(estado == 1)
         {
-            JSONArray info = obj.getJSONArray("info");
+            JSONArray info = obj.getJSONArray("datos");
             for (int i = 0; i < info.length(); i++)
             {
                 nombre = info.getJSONObject(i).getString("nombre");
@@ -62,7 +62,7 @@ public class Requester {
 
         else
         {
-            String info = obj.getString("info");
+            String info = obj.getString("datos");
             System.out.println(info);
             return null;
         }

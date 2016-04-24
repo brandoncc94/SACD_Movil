@@ -35,23 +35,22 @@ public class Perfil extends AppCompatActivity {
         try
         {
             profesor = requester.getProfeInfo("1");
+            setTitle(profesor.get(0));
+            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
+            getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
+            //Llenar tabla de plazas
+            listaPlazas.add(new Plaza(001,40, "Propiedad"));
+            listaPlazas.add(new Plaza(002,10, "Interina"));
+
+            tbPlazas = (TableLayout)findViewById(R.id.tbPlazas);
+            actualizarPlazas();
         }
 
         catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error al cargar información.",
                             Toast.LENGTH_SHORT).show();
         }
-
-        setTitle("profesor.get(0)");
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
-        getSupportActionBar().setBackgroundDrawable(colorDrawable);
-
-        //Llenar tabla de plazas
-        listaPlazas.add(new Plaza(001,40, "Propiedad"));
-        listaPlazas.add(new Plaza(002,10, "Interina"));
-
-        tbPlazas = (TableLayout)findViewById(R.id.tbPlazas);
-        actualizarPlazas();
     }
 
     private void actualizarPlazas()

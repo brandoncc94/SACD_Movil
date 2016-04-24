@@ -31,20 +31,19 @@ public class Perfil extends AppCompatActivity {
         setContentView(R.layout.activity_perfil);
 
         //Obtener id del profesor
-        /*Bundle bundle = getIntent().getExtras();
-        idProfesor = bundle.getString("id");*/
+        Bundle bundle = getIntent().getExtras();
+        idProfesor = bundle.getString("id");
 
         //Set profe info
         ArrayList<String> profesorInfo = new ArrayList<String>();
-        profesorInfo.add("Maria Arguedas");
-        profesorInfo.add("25");
 
         requester = Requester.getInstance();
         try
         {
-            profesorInfo = requester.getProfeInfo("1"); //poner idProfesor
+            profesorInfo = requester.getProfeInfo(idProfesor); //poner idProfesor
         }
-        catch(Exception e){
+        catch(Exception e)
+        {
             Toast.makeText(getApplicationContext(), "Error al cargar información.",
                     Toast.LENGTH_SHORT).show();
         }
@@ -58,14 +57,12 @@ public class Perfil extends AppCompatActivity {
         horasAsig.setText(profesorInfo.get(1));
 
         //Obtener Plazas
-        listaPlazas.add(new Plaza(001,40, "Propiedad"));
-        listaPlazas.add(new Plaza(002,10, "Interino"));
-
         try
         {
-            listaPlazas = requester.getPlazas("1"); //poner idProfesor
+            listaPlazas = requester.getPlazas(idProfesor); //poner idProfesor
         }
-        catch(Exception e){
+        catch(Exception e)
+        {
             Toast.makeText(getApplicationContext(), "Error al cargar Plazas.",
                     Toast.LENGTH_SHORT).show();
         }

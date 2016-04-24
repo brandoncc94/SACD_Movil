@@ -58,8 +58,8 @@ public class Perfil extends AppCompatActivity {
         horasAsig.setText(profesorInfo.get(1));
 
         //Obtener Plazas
-        listaPlazas.add(new Plaza(001,40, true));
-        listaPlazas.add(new Plaza(002,10, false));
+        listaPlazas.add(new Plaza(001,40, "Propiedad"));
+        listaPlazas.add(new Plaza(002,10, "Interino"));
 
         try
         {
@@ -85,7 +85,7 @@ public class Perfil extends AppCompatActivity {
         double horasMin = 0;
         for (Plaza plaza : listaPlazas)
         {
-            if(plaza.getPropiedad())
+            if(plaza.getModo().equals("Propiedad"))
                 horasMin += plaza.getHoras();
         }
 
@@ -147,10 +147,8 @@ public class Perfil extends AppCompatActivity {
             auxModalidad = new TextView(this);
             auxModalidad.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()));
             auxModalidad.setGravity(Gravity.CENTER);
-            if(plaza.getPropiedad())
-                auxModalidad.setText("Propiedad");
-            else
-                auxModalidad.setText("Interina");
+            auxModalidad.setText(plaza.getModo());
+
 
             auxRow.addView(auxNum);
             auxRow.addView(auxHoras);
@@ -158,6 +156,8 @@ public class Perfil extends AppCompatActivity {
 
             auxRow.setMinimumHeight(120);
             auxRow.setGravity(Gravity.CENTER_VERTICAL);
+            auxRow.setPadding(20,10,10,10);
+
 
             tbPlazas.addView(auxRow);
         }

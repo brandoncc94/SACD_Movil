@@ -7,12 +7,12 @@ public class Plaza {
 
     private int numero;
     private double horas;
-    private boolean isPropiedad;
+    private String modo;
 
-    public Plaza(int numero, double horas, boolean isPropiedad) {
+    public Plaza(int numero, double horas, String modo) {
         this.numero = numero;
         this.horas = horas;
-        this.isPropiedad = isPropiedad;
+        this.modo = modo;
     }
 
     public int getNumero() {
@@ -31,12 +31,12 @@ public class Plaza {
         this.horas = horas;
     }
 
-    public boolean getPropiedad() {
-        return isPropiedad;
+    public String getModo() {
+        return modo;
     }
 
-    public void setPropiedad(boolean propiedad) {
-        this.isPropiedad = propiedad;
+    public void setModo(String modo) {
+        this.modo = modo;
     }
 }
 

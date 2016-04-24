@@ -83,6 +83,7 @@ public class Requester {
         int numPlaza;
         double porcentaje;
         boolean isPropiedad;
+        String modo;
 
         ArrayList<Plaza> plazasList = new ArrayList<Plaza>();
         Plaza auxPlaza;
@@ -97,13 +98,22 @@ public class Requester {
         {
             System.out.println("PRUEBA ESTADO BUENO");
             JSONArray info = obj.getJSONArray("info");
+
+
             for (int i = 0; i < info.length(); i++)
             {
-                numPlaza = info.getJSONObject(i).getInt("plaza");
-                porcentaje = info.getJSONObject(i).getDouble("porcentaje");
-                isPropiedad = info.getJSONObject(i).getBoolean("modo");
-                auxPlaza = new Plaza(numPlaza, porcentaje, isPropiedad);
-                plazasList.add(auxPlaza);
+                try {
+                    numPlaza = info.getJSONObject(i).getInt("plaza");
+                    porcentaje = info.getJSONObject(i).getDouble("porcentaje");
+                    modo = info.getJSONObject(i).getString("modo");
+                    System.out.println("el MODO es " + modo);
+                    auxPlaza = new Plaza(numPlaza, porcentaje, modo);
+                    plazasList.add(auxPlaza);
+                }
+                catch (Exception e)
+                {
+                    System.out.println("EXCEPCION " + e.getMessage());
+                }
             }
 
             return plazasList;

@@ -43,10 +43,10 @@ public class Requester {
         ArrayList<String> listaProfesores = new ArrayList<String>();
         String request = "http://proyecto_softw.comxa.com/WebService/obtenerProfesores.php?profesor=all";
         JSONObject obj = connection.getObject(request);
-
-        System.out.println(obj);      //ACA TIRA NULL Y LA URL SI SIRVE!!
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
         int estado = obj.getInt("estado");
-        System.out.println(estado);
         if(estado == 1){
             JSONArray info = obj.getJSONArray("info");
             for (int i = 0; i < info.length(); i++){

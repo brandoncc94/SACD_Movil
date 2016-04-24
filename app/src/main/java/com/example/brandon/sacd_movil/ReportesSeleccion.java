@@ -18,16 +18,11 @@ public class ReportesSeleccion extends AppCompatActivity {
         setTitle("Generar Reportes");
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
+    }
 
-        Button btnGenerar = (Button) findViewById(R.id.btnGenerar);
-
-        btnGenerar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ReportesSeleccion.this, ReportesDetalle.class);
-                startActivity(intent);
-            }
-        });
+    public void btnGenerarOnClick(View v) {
+        Intent intent = new Intent(ReportesSeleccion.this, ReportesDetalle.class);
+        startActivity(intent);
     }
 
 }

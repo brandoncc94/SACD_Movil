@@ -153,15 +153,16 @@ public class Connection {
             JSONObject obj = null;
             try {
                 url = new URL(urlDirection);
-                System.out.println(urlDirection);
                 conn = url.openConnection();
                 reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                 String line;
 
                 while((line = reader.readLine()) != null)
                 {
-                    System.out.println(line);
-                    obj = new JSONObject(line);
+                    if(!line.trim().isEmpty()) {
+                        System.out.println(line);
+                        obj = new JSONObject(line);
+                    }
                 }
                 reader.close();
                 return obj;

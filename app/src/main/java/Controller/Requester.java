@@ -1,6 +1,8 @@
 package Controller;
 
 import Database.Connection;
+import Model.Plaza;
+
 import android.graphics.Bitmap;
 
 import org.json.JSONArray;
@@ -40,22 +42,27 @@ public class Requester {
     public ArrayList<String> getProfeInfo(String pIdProfe) throws Exception
     {
         String nombre;
-        String horasAsig;
+        double horasAsig;
 
         ArrayList<String> profesor = new ArrayList<String>();
         String request = "http://proyecto_softw.comxa.com/WebService/getProfeInfo.php?idProfe="+pIdProfe;
-
         JSONObject obj = connection.getObject(request);
 
-        int estado = obj.getInt("estado");
+        System.out.println(obj);
+
+        int  estado = obj.getInt("estado");
+
         if(estado == 1)
         {
+            System.out.println("PRUEBA ESTADO BUENO");
             JSONArray info = obj.getJSONArray("datos");
             for (int i = 0; i < info.length(); i++)
             {
                 nombre = info.getJSONObject(i).getString("nombre");
+                horasAsig = info.getJSONObject(i).getDouble("horasAsig");
                 profesor = new ArrayList<String>();
                 profesor.add(nombre);
+                profesor.add(String.valueOf(horasAsig));
             }
 
             return profesor;
@@ -63,7 +70,48 @@ public class Requester {
 
         else
         {
+            System.out.println("ESTADO MALO");
             String info = obj.getString("datos");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+    public ArrayList<Plaza> getPlazas(String pIdProfe) throws Exception
+    {
+        int numPlaza;
+        double porcentaje;
+        boolean isPropiedad;
+
+        ArrayList<Plaza> plazasList = new ArrayList<Plaza>();
+        Plaza auxPlaza;
+        String request = "http://proyecto_softw.comxa.com/WebService/getPlazasProf.php?idProfe="+pIdProfe;
+        JSONObject obj = connection.getObject(request);
+
+        System.out.println(obj);
+
+        int  estado = obj.getInt("estado");
+
+        if(estado == 1)
+        {
+            System.out.println("PRUEBA ESTADO BUENO");
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++)
+            {
+                numPlaza = info.getJSONObject(i).getInt("plaza");
+                porcentaje = info.getJSONObject(i).getDouble("porcentaje");
+                isPropiedad = info.getJSONObject(i).getBoolean("modo");
+                auxPlaza = new Plaza(numPlaza, porcentaje, isPropiedad);
+                plazasList.add(auxPlaza);
+            }
+
+            return plazasList;
+        }
+
+        else
+        {
+            System.out.println("ESTADO MALO");
+            String info = obj.getString("info");
             System.out.println(info);
             return null;
         }

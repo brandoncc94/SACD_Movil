@@ -6,13 +6,13 @@ package Model;
 public class Plaza {
 
     private int numero;
-    private float horas;
-    private String modo;
+    private double horas;
+    private boolean isPropiedad;
 
-    public Plaza(int numero, float horas, String modo) {
+    public Plaza(int numero, double horas, boolean isPropiedad) {
         this.numero = numero;
         this.horas = horas;
-        this.modo = modo;
+        this.isPropiedad = isPropiedad;
     }
 
     public int getNumero() {
@@ -23,20 +23,20 @@ public class Plaza {
         this.numero = numero;
     }
 
-    public float getHoras() {
+    public double getHoras() {
         return horas;
     }
 
-    public void setHoras(float horas) {
+    public void setHoras(double horas) {
         this.horas = horas;
     }
 
-    public String getModo() {
-        return modo;
+    public boolean getPropiedad() {
+        return isPropiedad;
     }
 
-    public void setModo(String modo) {
-        this.modo = modo;
+    public void setPropiedad(boolean propiedad) {
+        this.isPropiedad = propiedad;
     }
 }
 

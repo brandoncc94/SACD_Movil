@@ -23,34 +23,73 @@ public class Perfil extends AppCompatActivity {
     private ArrayList<Plaza> listaPlazas = new ArrayList<>();
     TableLayout tbPlazas;
     Requester requester;
+    String idProfesor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+        //Obtener id del profesor
+        /*Bundle bundle = getIntent().getExtras();
+        idProfesor = bundle.getString("id");*/
+
         //Set profe info
-        ArrayList<String> profesor = new ArrayList<String>();
+        ArrayList<String> profesorInfo = new ArrayList<String>();
+        profesorInfo.add("Maria Arguedas");
+        profesorInfo.add("25");
+
         requester = Requester.getInstance();
         try
         {
-            profesor = requester.getProfeInfo("1");
-            setTitle(profesor.get(0));
-            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
-            getSupportActionBar().setBackgroundDrawable(colorDrawable);
-
-            //Llenar tabla de plazas
-            listaPlazas.add(new Plaza(001,40, "Propiedad"));
-            listaPlazas.add(new Plaza(002,10, "Interina"));
-
-            tbPlazas = (TableLayout)findViewById(R.id.tbPlazas);
-            actualizarPlazas();
+            profesorInfo = requester.getProfeInfo("1"); //poner idProfesor
         }
-
         catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error al cargar información.",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
         }
+
+        setTitle(profesorInfo.get(0));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
+        //Horas asignadas
+        TextView horasAsig = (TextView)findViewById(R.id.lblHorasAsig);
+        horasAsig.setText(profesorInfo.get(1));
+
+        //Obtener Plazas
+        listaPlazas.add(new Plaza(001,40, true));
+        listaPlazas.add(new Plaza(002,10, false));
+
+        try
+        {
+            listaPlazas = requester.getPlazas("1"); //poner idProfesor
+        }
+        catch(Exception e){
+            Toast.makeText(getApplicationContext(), "Error al cargar Plazas.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        tbPlazas = (TableLayout)findViewById(R.id.tbPlazas);
+        actualizarPlazas();
+
+        //calcular horas mínimas
+        //Horas asignadas
+        TextView horasMin = (TextView)findViewById(R.id.lblHorasMin);
+        horasMin.setText(String.valueOf(getHorasMin()));
+
+    }
+
+    private double getHorasMin()
+    {
+        double horasMin = 0;
+        for (Plaza plaza : listaPlazas)
+        {
+            if(plaza.getPropiedad())
+                horasMin += plaza.getHoras();
+        }
+
+        return horasMin;
     }
 
     private void actualizarPlazas()
@@ -108,7 +147,10 @@ public class Perfil extends AppCompatActivity {
             auxModalidad = new TextView(this);
             auxModalidad.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()));
             auxModalidad.setGravity(Gravity.CENTER);
-            auxModalidad.setText(plaza.getModo());
+            if(plaza.getPropiedad())
+                auxModalidad.setText("Propiedad");
+            else
+                auxModalidad.setText("Interina");
 
             auxRow.addView(auxNum);
             auxRow.addView(auxHoras);

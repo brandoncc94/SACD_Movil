@@ -123,7 +123,7 @@ public class BusquedaProfesor extends AppCompatActivity {
             auxButton.setOnClickListener(new Button.OnClickListener() {    //evento boton profesor
                 public void onClick(View v) {
                     EspecialButton button = (EspecialButton)v;
-                    Intent nextActivity = new Intent(v.getContext(), Prueba.class);
+                    Intent nextActivity = new Intent(v.getContext(), Perfil.class);
                     nextActivity.putExtra("id", button.getOwner().toString());
                     startActivity(nextActivity);
                 }});

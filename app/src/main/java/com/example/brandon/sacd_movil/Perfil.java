@@ -10,8 +10,11 @@ import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import Controller.Requester;
 import Model.Plaza;
 
 
@@ -19,13 +22,27 @@ public class Perfil extends AppCompatActivity {
 
     private ArrayList<Plaza> listaPlazas = new ArrayList<>();
     TableLayout tbPlazas;
+    Requester requester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        setTitle("María Arguedas Solano");
+        //Set profe info
+        ArrayList<String> profesor = new ArrayList<String>();
+        requester = Requester.getInstance();
+        try
+        {
+            profesor = requester.getProfeInfo("1");
+        }
+
+        catch(Exception e){
+            Toast.makeText(getApplicationContext(), "Error al cargar información.",
+                            Toast.LENGTH_SHORT).show();
+        }
+
+        setTitle("profesor.get(0)");
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#27AE8D"));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 

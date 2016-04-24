@@ -37,6 +37,37 @@ public class Requester {
         return requester;
     }
 
+    public ArrayList<String> getProfeInfo(String pIdProfe) throws Exception
+    {
+        String nombre;
+        String horasAsig;
+
+        ArrayList<String> profesor = new ArrayList<String>();
+        String request = "http://proyecto_softw.comxa.com/WebService/getProfeInfo.php?idProfe="+pIdProfe;
+
+        JSONObject obj = connection.getObject(request);
+
+        int estado = obj.getInt("estado");
+        if(estado == 1)
+        {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++)
+            {
+                nombre = info.getJSONObject(i).getString("nombre");
+                profesor = new ArrayList<String>();
+                profesor.add(nombre);
+            }
+            return profesor;
+        }
+
+        else
+        {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
     public ArrayList<String> getProfesores() throws Exception
     {
         String nombre,id, horas;
@@ -181,40 +212,7 @@ public class Requester {
         }
     }
 
-    public ArrayList<String> getProducto(String pIdProducto) throws Exception
-    {
-        String nombre;
-        String descripcion;
-        String precio;
-        String imageURL;
 
-        ArrayList<String> producto = new ArrayList<String>();
-        String request = "http://macrobioticasaludnatural.uphero.com/WebService/main.php?consulta=4" +
-                "&producto="+pIdProducto;
-
-        JSONObject obj = connection.getObject(request);
-
-        int estado = obj.getInt("estado");
-        if(estado == 1){
-            JSONArray info = obj.getJSONArray("info");
-            for (int i = 0; i < info.length(); i++){
-                nombre = info.getJSONObject(i).getString("nombre");
-                descripcion = info.getJSONObject(i).getString("descripcion");
-                precio = info.getJSONObject(i).getString("precio");
-                imageURL = info.getJSONObject(i).getString("imagen");
-                producto = new ArrayList<String>();
-                producto.add(nombre);
-                producto.add(descripcion);
-                producto.add(precio);
-                producto.add(imageURL);
-            }
-            return producto;
-        }else{
-            String info = obj.getString("info");
-            System.out.println(info);
-            return null;
-        }
-    }
 
     public Bitmap getImage (String pImageURL) throws Exception
     {

@@ -1,6 +1,8 @@
 package Controller;
 
 import Database.Connection;
+import Model.Semestre;
+
 import android.graphics.Bitmap;
 
 import org.json.JSONArray;
@@ -89,6 +91,33 @@ public class Requester {
             }
             System.out.println(listaProfesores);
             return listaProfesores;
+        }else{
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+    public ArrayList<Semestre> getSemestres() throws Exception
+    {
+        String id, periodo, anio;
+        ArrayList<Semestre> listaSemestres = new ArrayList<>();
+        String request = "http://proyecto_softw.comxa.com/WebService/getSemestres";
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+        int estado = obj.getInt("estado");
+        if(estado == 1){
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++){
+                id = info.getJSONObject(i).getString("id_semestre");
+                anio = info.getJSONObject(i).getString("num_año");
+                periodo = info.getJSONObject(i).getString("num_periodo");
+                listaSemestres.add(new Semestre(id,anio,periodo));
+            }
+            System.out.println(listaSemestres);
+            return listaSemestres;
         }else{
             String info = obj.getString("info");
             System.out.println(info);

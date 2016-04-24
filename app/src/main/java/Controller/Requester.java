@@ -53,9 +53,7 @@ public class Requester {
                 id = info.getJSONObject(i).getString("id_profesor");
                 nombre = info.getJSONObject(i).getString("nom_profesor");
                 horas = info.getJSONObject(i).getString("num_horas_asign");
-                listaProfesores.add(id);
-                listaProfesores.add(nombre);
-                listaProfesores.add(horas);
+                listaProfesores.add(id + "-" + nombre + "-" + horas);
             }
             System.out.println(listaProfesores);
             return listaProfesores;

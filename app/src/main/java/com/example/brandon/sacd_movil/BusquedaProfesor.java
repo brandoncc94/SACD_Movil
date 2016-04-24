@@ -102,70 +102,33 @@ public class BusquedaProfesor extends AppCompatActivity {
 
         for (String profesor : tmpNombresProfesores)
         {
+            String id = "";
+            String nombre = "";
+            String horas = "";
+            String[] parts = profesor.split("-");
+            id = parts[0];
+            nombre = parts[1];
+            horas = parts[2];
+
             auxRow = new TableRow(this);
             auxProfesor = new TextView(this);
             auxProfesor.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, getResources().getDisplayMetrics()));
             auxProfesor.setGravity(Gravity.CENTER);
 
-            auxButton = new EspecialButton(this,profesor);
+            auxButton = new EspecialButton(this, id);
+            auxButton.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, getResources().getDisplayMetrics()));
+            auxButton.setGravity(Gravity.CENTER);
             auxButton.setText("Ver");
 
-
-            /*auxButton.setOnClickListener(new Button.OnClickListener() {    //evento boton profesor
+            auxButton.setOnClickListener(new Button.OnClickListener() {    //evento boton profesor
                 public void onClick(View v) {
                     EspecialButton button = (EspecialButton)v;
-                    TableLayout tbTratamiento = (TableLayout)findViewById(R.id.tbProfesores);
-
-                    //clean table tratamientos
-                    for(int count = tbTratamiento.getChildCount()-1; count >= 0; count--)
-                    {
-                        System.out.println(count);
-                        tbTratamiento.removeViewAt(count);
-                    }
-
-                    try {
-                        ArrayList<ArrayList<String>> tratamiento = requester.getTratamiento(button.getOwner());
-                        TableRow auxRow;
-                        TextView auxId;
-                        TextView auxNombre;
-                        EspecialButton btnVer;
-                        for (ArrayList<String> producto : tratamiento)
-                        {
-                            auxRow = new TableRow(button.getContext());
-                            auxId = new TextView(button.getContext());
-                            auxId.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, getResources().getDisplayMetrics()));
-                            auxId.setGravity(Gravity.CENTER);
-
-                            auxNombre = new TextView(button.getContext());
-                            auxNombre.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 120, getResources().getDisplayMetrics()));
-                            auxNombre.setGravity(Gravity.CENTER);
-
-                            btnVer = new EspecialButton(button.getContext(),producto.get(0));
-                            btnVer.setOnClickListener(new Button.OnClickListener() { //evento boton Producto
-                                public void onClick(View v) {
-                                    EspecialButton button = (EspecialButton)v;
-                                    Intent nextActivity = new Intent(v.getContext(), DetalleProductoActivity.class);
-                                    nextActivity.putExtra("id",button.getOwner());
-                                    startActivity(nextActivity);
-                                }});
-
-                            auxId.setText(producto.get(0));
-                            auxNombre.setText(producto.get(1));
-                            auxRow.addView(auxId);
-                            auxRow.addView(auxNombre);
-                            auxRow.addView(btnVer);
-
-                            tbTratamiento.addView(auxRow);
-                        }
-                    }
-                    catch(Exception e){
-                        Toast.makeText(getApplicationContext(), "Error al cargar el tratamiento",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    Intent nextActivity = new Intent(v.getContext(), Prueba.class);
+                    nextActivity.putExtra("id", button.getOwner().toString());
+                    startActivity(nextActivity);
                 }});
 
-            */
-            auxProfesor.setText(profesor);
+            auxProfesor.setText(nombre);
             auxRow.addView(auxProfesor);
             auxRow.addView(auxButton);
 

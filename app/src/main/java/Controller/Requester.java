@@ -1,6 +1,11 @@
 package Controller;
 
 import Database.Connection;
+import Model.Actividad;
+import Model.ActvAdmin;
+import Model.Asignacion;
+import Model.Grupo;
+import Model.Investigacion;
 import Model.Plaza;
 import Model.Semestre;
 
@@ -184,131 +189,6 @@ public class Requester {
         }
     }
 
-    public ArrayList<String> getEnfermedad(ArrayList<String> pSintomas) throws Exception
-    {
-        String auxSintoma = null;
-        String nombre = null;
-        ArrayList<String> listaEnfermedades = new ArrayList<String>();
-        String request = "http://macrobioticasaludnatural.uphero.com/WebService/main.php?consulta=2"
-                +"&enfermedad=";
-
-
-        for(int index = 0; index < pSintomas.size(); index++)
-        {
-            auxSintoma = pSintomas.get(index).replace(" ","+");
-            //Arreglo temporal para obtener las palabras separadas por el +
-            String[] tmpArray = auxSintoma.split("\\+");
-            for (int i = 0; i < tmpArray.length; i++) {
-                if (i == tmpArray.length - 1)
-                    request += URLEncoder.encode(new String(tmpArray[i]), "utf-8");
-                else
-                    request += URLEncoder.encode(new String(tmpArray[i]), "utf-8") + "+";
-            }
-
-            if (index < pSintomas.size()-1)
-                request += ",";
-        }
-
-        JSONObject obj = connection.getObject(request);
-
-        int estado = obj.getInt("estado");
-        if(estado == 1){
-            JSONArray info = obj.getJSONArray("info");
-            for (int i = 0; i < info.length(); i++){
-                nombre = info.getJSONObject(i).getString("nombre");
-                listaEnfermedades.add(nombre);
-            }
-            return listaEnfermedades;
-        }else{
-            String info = obj.getString("info");
-            System.out.println(info);
-            return null;
-        }
-    }
-
-    public ArrayList<ArrayList<String>> getTratamiento(String pEnfermedad) throws Exception
-    {
-        String auxEnfermedad = null;
-        String nombre = null;
-        String id = null;
-        ArrayList<ArrayList<String>> tratamiento = new ArrayList<ArrayList<String>>();
-        ArrayList<String> producto;
-        String request = "http://macrobioticasaludnatural.uphero.com/WebService/main.php?consulta=3" +
-                "&tratamiento=";
-
-        auxEnfermedad = pEnfermedad.replace(" ", "+");
-        //Arreglo temporal para obtener las palabras separadas por el +
-        String[] tmpArray = auxEnfermedad.split("\\+");
-        for (int i = 0; i < tmpArray.length; i++) {
-            if (i == tmpArray.length - 1)
-                request += URLEncoder.encode(new String(tmpArray[i]), "utf-8");
-            else
-                request += URLEncoder.encode(new String(tmpArray[i]), "utf-8") + "+";
-        }
-
-        JSONObject obj = connection.getObject(request);
-
-        int estado = obj.getInt("estado");
-        if(estado == 1){
-            JSONArray info = obj.getJSONArray("info");
-            for (int i = 0; i < info.length(); i++){
-                id = info.getJSONObject(i).getString("idProducto");
-                nombre = info.getJSONObject(i).getString("nombre");
-                producto = new ArrayList<String>();
-                producto.add(id);
-                producto.add(nombre);
-                tratamiento.add(producto);
-            }
-            return tratamiento;
-        }else{
-            String info = obj.getString("info");
-            System.out.println(info);
-            return null;
-        }
-    }
-
-    public ArrayList<ArrayList<String>> getSucursales() throws Exception
-    {
-        String id = null;
-        String provincia = null;
-        String canton = null;
-
-        ArrayList<ArrayList<String>> sucursales = new ArrayList<ArrayList<String>>();
-        ArrayList<String> sucursal;
-        String request = "http://macrobioticasaludnatural.uphero.com/WebService/main.php?consulta=5" +
-                "&sucursal=all";
-
-        JSONObject obj = connection.getObject(request);
-
-        int estado = obj.getInt("estado");
-        if(estado == 1){
-            JSONArray info = obj.getJSONArray("info");
-            for (int i = 0; i < info.length(); i++){
-                id = info.getJSONObject(i).getString("codigo");
-                provincia = info.getJSONObject(i).getString("provincia");
-                canton = info.getJSONObject(i).getString("canton");
-                sucursal = new ArrayList<String>();
-                sucursal.add(id);
-                sucursal.add(provincia);
-                sucursal.add(canton);
-                sucursales.add(sucursal);
-            }
-            return sucursales;
-        }else{
-            String info = obj.getString("info");
-            System.out.println(info);
-            return null;
-        }
-    }
-
-
-
-    public Bitmap getImage (String pImageURL) throws Exception
-    {
-        Bitmap image =  connection.getImage(pImageURL);
-        return image;
-    }
-
     public ArrayList<ArrayList<String>> getResultadosBusqueda (String pCriterio) throws Exception
     {
         String id;
@@ -342,4 +222,155 @@ public class Requester {
             return null;
         }
     }
+
+
+    public static ArrayList<Asignacion> getAsignaciones(String pIdProfe, String pPeriodo, String pAño)throws Exception {
+        String idActividad, numValorHoras;
+        ArrayList<Asignacion> listaAsignaciones = new ArrayList<>();
+        String request = "http://proyecto_softw.comxa.com/WebService/getAsignaciones.php?idProfe=" + pIdProfe + "&periodo=" + pPeriodo + "&anio=" + pAño;
+
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+
+        int estado = obj.getInt("estado");
+        if (estado == 1) {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++) {
+                idActividad = info.getJSONObject(i).getString("id_actividad");
+                numValorHoras = info.getJSONObject(i).getString("num_valor_horas");
+                listaAsignaciones.add(new Asignacion(numValorHoras, getActividad(idActividad)));
+            }
+            System.out.println(listaAsignaciones);
+            return listaAsignaciones;
+        } else {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+
+    public static Actividad getActividad(String pIdActividad)throws Exception {
+        String tipo = "";
+        String request = "http://proyecto_softw.comxa.com/WebService/getActividad.php?idActividad=" + pIdActividad;
+
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+
+        int estado = obj.getInt("estado");
+        if (estado == 1) {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++) {
+                tipo = info.getJSONObject(i).getString("txt_tipo");
+            }
+
+            if(tipo.equals("INVE")){
+                Investigacion inve = getInvestigacion(pIdActividad);
+                return inve;
+            }
+            else if(tipo.equals("ADMI")){
+                ActvAdmin admi = getAdministrativa(pIdActividad);
+                return admi;
+            }
+            else{
+                Grupo grupo = getGrupo(pIdActividad);
+                return grupo;
+            }
+
+        } else {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+    public static Investigacion getInvestigacion(String pIdActividad)throws Exception {
+        String nombre = "";
+        String horas = "";
+        String request = "http://proyecto_softw.comxa.com/WebService/getInvestigacion.php?idActividad=" + pIdActividad;
+
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+
+        int estado = obj.getInt("estado");
+        if (estado == 1) {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++) {
+                nombre = info.getJSONObject(i).getString("nom_investig");
+                horas = info.getJSONObject(i).getString("can_horas");
+            }
+
+            return new Investigacion(pIdActividad, "INVE", horas, nombre);
+
+        } else {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+    public static ActvAdmin getAdministrativa(String pIdActividad)throws Exception {
+        String nombre = "";
+        String horas = "";
+        String request = "http://proyecto_softw.comxa.com/WebService/getAdministrativa.php?idActividad=" + pIdActividad;
+
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+
+        int estado = obj.getInt("estado");
+        if (estado == 1) {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++) {
+                nombre = info.getJSONObject(i).getString("nom_adminitrativ");
+                horas = info.getJSONObject(i).getString("can_horas");
+            }
+
+            return new ActvAdmin(pIdActividad, "ADMI", horas, nombre);
+
+        } else {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+    public static Grupo getGrupo(String pIdActividad)throws Exception {
+        String nombre = "";
+        String numero = "";
+        String cantidad = "";
+        String request = "http://proyecto_softw.comxa.com/WebService/getGrupo.php?idActividad=" + pIdActividad;
+
+        JSONObject obj = connection.getObject(request);
+        System.out.println("Prueba");
+        System.out.println(obj);
+        System.out.println("Prueba");
+
+        int estado = obj.getInt("estado");
+        if (estado == 1) {
+            JSONArray info = obj.getJSONArray("info");
+            for (int i = 0; i < info.length(); i++) {
+                nombre = info.getJSONObject(i).getString("nom_curso");
+                numero = info.getJSONObject(i).getString("num_grupo");
+                cantidad = info.getJSONObject(i).getString("num_estudiantes");
+            }
+
+            return new Grupo(pIdActividad, nombre, "GRUP", "", numero, cantidad);
+
+        } else {
+            String info = obj.getString("info");
+            System.out.println(info);
+            return null;
+        }
+    }
+
+
+
 }

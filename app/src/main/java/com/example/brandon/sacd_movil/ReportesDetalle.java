@@ -124,7 +124,7 @@ public class ReportesDetalle extends AppCompatActivity {
         tipo.setTypeface(null, Typeface.BOLD);
         auxRow.addView(tipo);
 
-        nombre.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics()));
+        nombre.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics()));
         nombre.setGravity(Gravity.CENTER);
         nombre.setText("Nombre");
         nombre.setTextColor(Color.WHITE);
@@ -152,11 +152,12 @@ public class ReportesDetalle extends AppCompatActivity {
 
         for (Asignacion asignacion : pAsignaciones) {
             auxRow = new TableRow(this);
+            auxRow.setPadding(15,15,15,15);
             tipo = new TextView(this);
             tipo.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics()));
             tipo.setGravity(Gravity.CENTER);
             nombre = new TextView(this);
-            nombre.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics()));
+            nombre.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics()));
             nombre.setGravity(Gravity.CENTER);
             horas = new TextView(this);
             horas.setWidth((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
@@ -173,17 +174,17 @@ public class ReportesDetalle extends AppCompatActivity {
 
             if (asignacion.getActividad().getTipo() == "INVE") {
                 Investigacion inve = (Investigacion) asignacion.getActividad();
-                tipo.setText("INVE");
+                tipo.setText("I");
                 nombre.setText(inve.getNombre());
 
             } else if (asignacion.getActividad().getTipo() == "ADMI") {
                 ActvAdmin admi = (ActvAdmin) asignacion.getActividad();
-                tipo.setText("ADMI");
+                tipo.setText("A");
                 nombre.setText(admi.getNombre());
 
             } else {
                 Grupo grupo = (Grupo) asignacion.getActividad();
-                tipo.setText("GRUP");
+                tipo.setText("G");
                 nombre.setText(grupo.getNombre());
             }
 

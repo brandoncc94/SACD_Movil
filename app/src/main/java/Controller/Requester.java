@@ -54,13 +54,13 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getProfeInfo.php?idProfe="+pIdProfe;
         JSONObject obj = connection.getObject(request);
 
-        System.out.println(obj);
+        //System.out.println(obj);
 
         int  estado = obj.getInt("estado");
 
         if(estado == 1)
         {
-            System.out.println("PRUEBA ESTADO BUENO");
+            //System.out.println("PRUEBA ESTADO BUENO");
             JSONArray info = obj.getJSONArray("datos");
             for (int i = 0; i < info.length(); i++)
             {
@@ -76,9 +76,9 @@ public class Requester {
 
         else
         {
-            System.out.println("ESTADO MALO");
+            //System.out.println("ESTADO MALO");
             String info = obj.getString("datos");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -95,13 +95,13 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getPlazasProf.php?idProfe="+pIdProfe;
         JSONObject obj = connection.getObject(request);
 
-        System.out.println(obj);
+        //System.out.println(obj);
 
         int  estado = obj.getInt("estado");
 
         if(estado == 1)
         {
-            System.out.println("PRUEBA ESTADO BUENO");
+            //System.out.println("PRUEBA ESTADO BUENO");
             JSONArray info = obj.getJSONArray("info");
 
 
@@ -111,13 +111,13 @@ public class Requester {
                     numPlaza = info.getJSONObject(i).getInt("plaza");
                     porcentaje = info.getJSONObject(i).getDouble("porcentaje");
                     modo = info.getJSONObject(i).getString("modo");
-                    System.out.println("el MODO es " + modo);
+                    //System.out.println("el MODO es " + modo);
                     auxPlaza = new Plaza(numPlaza, porcentaje, modo);
                     plazasList.add(auxPlaza);
                 }
                 catch (Exception e)
                 {
-                    System.out.println("EXCEPCION " + e.getMessage());
+                    //System.out.println("EXCEPCION " + e.getMessage());
                 }
             }
 
@@ -126,9 +126,9 @@ public class Requester {
 
         else
         {
-            System.out.println("ESTADO MALO");
+            //System.out.println("ESTADO MALO");
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -139,9 +139,9 @@ public class Requester {
         ArrayList<String> listaProfesores = new ArrayList<String>();
         String request = "http://proyecto_softw.comxa.com/WebService/obtenerProfesores.php?profesor=all";
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
         int estado = obj.getInt("estado");
         if(estado == 1){
             JSONArray info = obj.getJSONArray("info");
@@ -151,11 +151,11 @@ public class Requester {
                 horas = info.getJSONObject(i).getString("num_horas_asign");
                 listaProfesores.add(id + "-" + nombre + "-" + horas);
             }
-            System.out.println(listaProfesores);
+            //System.out.println(listaProfesores);
             return listaProfesores;
         }else{
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -167,9 +167,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getSemestres.php";
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if(estado == 1){
@@ -180,11 +180,11 @@ public class Requester {
                 periodo = info.getJSONObject(i).getString("num_periodo");
                 listaSemestres.add(new Semestre(id,anio,periodo));
             }
-            System.out.println(listaSemestres);
+            //System.out.println(listaSemestres);
             return listaSemestres;
         }else{
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -218,7 +218,7 @@ public class Requester {
             return resultados;
         }else{
             String info = obj.getString("info");
-            System.out.println(info);
+            ////System.out.println(info);
             return null;
         }
     }
@@ -230,9 +230,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getAsignaciones.php?idProfe=" + pIdProfe + "&periodo=" + pPeriodo + "&anio=" + pAño;
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        ////System.out.println("Prueba");
+        ////System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if (estado == 1) {
@@ -242,11 +242,11 @@ public class Requester {
                 numValorHoras = info.getJSONObject(i).getString("num_valor_horas");
                 listaAsignaciones.add(new Asignacion(numValorHoras, getActividad(idActividad)));
             }
-            System.out.println(listaAsignaciones);
+            //System.out.println(listaAsignaciones);
             return listaAsignaciones;
         } else {
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -257,9 +257,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getActividad.php?idActividad=" + pIdActividad;
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if (estado == 1) {
@@ -283,7 +283,7 @@ public class Requester {
 
         } else {
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -294,9 +294,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getInvestigacion.php?idActividad=" + pIdActividad;
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if (estado == 1) {
@@ -310,7 +310,7 @@ public class Requester {
 
         } else {
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -321,9 +321,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getAdministrativa.php?idActividad=" + pIdActividad;
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if (estado == 1) {
@@ -337,7 +337,7 @@ public class Requester {
 
         } else {
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }
@@ -349,9 +349,9 @@ public class Requester {
         String request = "http://proyecto_softw.comxa.com/WebService/getGrupo.php?idActividad=" + pIdActividad;
 
         JSONObject obj = connection.getObject(request);
-        System.out.println("Prueba");
-        System.out.println(obj);
-        System.out.println("Prueba");
+        //System.out.println("Prueba");
+        //System.out.println(obj);
+        //System.out.println("Prueba");
 
         int estado = obj.getInt("estado");
         if (estado == 1) {
@@ -366,7 +366,7 @@ public class Requester {
 
         } else {
             String info = obj.getString("info");
-            System.out.println(info);
+            //System.out.println(info);
             return null;
         }
     }

@@ -160,7 +160,7 @@ public class Connection {
                 while((line = reader.readLine()) != null)
                 {
                     if(!line.trim().isEmpty()) {
-                        System.out.println(line);
+                        //Sytem.out.println(line);
                         obj = new JSONObject(line);
                     }
                 }
